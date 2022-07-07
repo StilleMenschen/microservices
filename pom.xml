@@ -6,7 +6,12 @@
 
     <groupId>tech.tystnad</groupId>
     <artifactId>microservices</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>customer</module>
+    </modules>
 
     <name>microservices</name>
     <url>https://microservices.tystnad.tech</url>
@@ -39,6 +44,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
