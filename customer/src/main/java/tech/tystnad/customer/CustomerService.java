@@ -19,7 +19,7 @@ public class CustomerService {
                 .email(request.getEmail()).build();
         Optional<Customer> customerByEmail = customerRepository.findCustomerByEmail(customer.getEmail());
         if (customerByEmail.isPresent()) {
-            throw new IllegalStateException("email is duplicate");
+            throw new IllegalStateException("duplicate email addresses");
         }
         customerRepository.save(customer);
         return ResponseEntity.ok(customer);
