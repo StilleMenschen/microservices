@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -29,11 +30,9 @@ public class CustomerService {
                 FraudCheckResponse.class,
                 customer.getId()
         );
-        Optional.ofNullable(fraudCheckResponse).ifPresent(e -> {
-            if (e.isFraudster()) {
-                throw new IllegalStateException(String.format("the %s fraudster", customer.getFirstName()));
-            }
-        });
+        if (Objects.nonNull(fraudCheckResponse) && fraudCheckResponse.isFraudster()) {
+            throw new IllegalStateException(String.format("the %s fraudster", customer.getFirstName()));
+        }
         return ResponseEntity.ok(customer);
     }
 }
