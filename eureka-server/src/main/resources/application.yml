@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: eureka-server
+
+server:
+  port: 8761
+  error:
+    include-message: always
+    include-stacktrace: never
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
