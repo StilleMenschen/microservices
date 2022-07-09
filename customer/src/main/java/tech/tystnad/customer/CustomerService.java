@@ -25,6 +25,7 @@ public class CustomerService {
             throw new IllegalStateException("duplicate email addresses");
         }
         customerRepository.saveAndFlush(customer);
+        // 面向微服务编程, 即通过微服务的名称来获取调用地址
         FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
                 "http://FRAUD/api/v1/fraud-check/{customerId}",
                 FraudCheckResponse.class,

@@ -12,6 +12,7 @@ import java.time.Duration;
 public class CustomerConfig {
 
     @Bean
+    // 在客户端使用 RestTemplate 请求服务端时, 开启负载均衡 (Ribbon)
     @LoadBalanced
     public RestTemplate restTemplate() {
         return new RestTemplateBuilder()

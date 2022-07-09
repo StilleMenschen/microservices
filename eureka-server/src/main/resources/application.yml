@@ -10,5 +10,10 @@ server:
 
 eureka:
   client:
+    # 注册中心不需要注册自身
     fetch-registry: false
+    # 注册中心不需要检索服务
     register-with-eureka: false
+    # 服务注册中心集群
+#    service-url:
+#      defaultZone: https://eureka1:18761/eureka/,https://eureka2:28761/eureka/
