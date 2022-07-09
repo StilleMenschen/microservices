@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: notification
+  rabbitmq:
+    host: localhost
+    port: 5672
+    virtual-host: /
+  cloud:
+    stream:
+      bindings:
+        input-in-0:
+          group: someGroup
+          consumer:
+            batch-mode: true
+      rabbit:
+        bindings:
+          input-in-0:
+            consumer:
+              enable-batching: true
+              batch-size: 10
+              receive-timeout: 200
+
+server:
+  port: 8083
+  error:
+    include-message: always
+    include-stacktrace: never
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
