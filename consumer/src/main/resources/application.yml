@@ -1,6 +1,18 @@
 spring:
   application:
     name: consumer
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      config:
+        server-addr: 127.0.0.1:8888
+        namespace: tech-tystnad
+        enable-remote-sync-config: true
+        file-extension: yaml
+  config:
+    import:
+      - optional:nacos:consumer.yaml
 
 server:
   port: 8085

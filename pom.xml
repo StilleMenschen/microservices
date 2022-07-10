@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.8</version>
+        <version>2.6.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -33,9 +33,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <spring.boot.maven.plugin.version>2.6.8</spring.boot.maven.plugin.version>
-        <spring.boot.dependencies.version>2.6.8</spring.boot.dependencies.version>
-        <spring.cloud.version>2021.0.3</spring.cloud.version>
+        <!--
+        由于使用到了 nacos 版本的依赖关系参考如下链接
+        https://github.com/alibaba/spring-cloud-alibaba/wiki
+        https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/spring-cloud-alibaba-docs/src/main/asciidoc-zh/sca-upgrade-guide.adoc
+        -->
+        <spring.boot.maven.plugin.version>2.6.3</spring.boot.maven.plugin.version>
+        <spring.boot.dependencies.version>2.6.3</spring.boot.dependencies.version>
+        <spring.cloud.dependencies.version>2021.0.1</spring.cloud.dependencies.version>
+        <spring.cloud.alibaba.version>2021.0.1.0</spring.cloud.alibaba.version>
     </properties>
 
     <dependencyManagement>
@@ -50,7 +56,14 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
+                <version>${spring.cloud.dependencies.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring.cloud.alibaba.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
