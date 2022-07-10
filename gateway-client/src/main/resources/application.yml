@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: gateway-client
+  router:
+    prefix: /api/v1
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: producer_routing
+          # 动态路由, 使用注册的服务名称替代地址端口
+          uri: lb://PRODUCER
+          predicates:
+          - Path=/producer/**
+          - Method=GET,POST
+          filters:
+          - PrefixPath=${spring.router.prefix}
+        - id: customer_routing
+          uri: lb://CUSTOMER
+          predicates:
+          - Path=/customers/**
+          - Method=GET,POST
+          filters:
+          - PrefixPath=${spring.router.prefix}
+        - id: consumer_routing
+          uri: lb://CONSUMER
+          predicates:
+          - Path=/consumer/**
+          - Method=GET,POST
+          filters:
+          - PrefixPath=${spring.router.prefix}
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-stacktrace: never
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

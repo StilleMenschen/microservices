@@ -23,6 +23,7 @@
         <module>notification</module>
         <module>consumer</module>
         <module>producer</module>
+        <module>gateway-client</module>
     </modules>
 
     <name>microservices</name>
