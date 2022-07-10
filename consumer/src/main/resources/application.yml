@@ -14,6 +14,16 @@ spring:
     import:
       - optional:nacos:consumer.yaml
 
+feign:
+  circuitbreaker:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 3000
+        readTimeout: 3000
+        loggerLevel: basic
+
 server:
   port: 8085
   error:

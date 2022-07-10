@@ -13,12 +13,12 @@ public class ProducerController {
     private final ProducerService producerService;
 
     @GetMapping("/ok")
-    public String ok() {
+    public ProducerResponse ok() {
         return producerService.ok();
     }
 
     @GetMapping("/fail")
-    public String fail() {
+    public ProducerResponse fail() {
         return producerService.fail();
     }
 }

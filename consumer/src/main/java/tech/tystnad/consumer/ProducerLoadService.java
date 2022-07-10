@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @Component
-// 声明服务提供者的名称, 对应注册中心上的服务名
-@FeignClient(name = "PRODUCER")
+// 声明服务提供者的名称, 对应注册中心上的服务名, 指定一个调用失败的替代处理实现类
+@FeignClient(name = "PRODUCER", fallback = ProducerLoadServiceFallBack.class)
 public interface ProducerLoadService {
 
     @GetMapping(value = "/api/v1/producer/fail")
-    String fail();
+    ProducerResponse fail();
 
     // 对应服务提供者的请求地址
     @RequestMapping(method = RequestMethod.GET, value = "/api/v1/producer/load")

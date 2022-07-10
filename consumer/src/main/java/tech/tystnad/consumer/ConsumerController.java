@@ -15,6 +15,7 @@ import java.util.List;
 public class ConsumerController {
     // 远程调用服务
     private final ProducerLoadService producerLoadService;
+    // 配类
     private final ConsumerAppConfig consumerAppConfig;
 
     @Value("${app.value}")
@@ -27,9 +28,11 @@ public class ConsumerController {
     }
 
     @GetMapping
-    public String hello() {
+    public ProducerResponse hello() {
         log.info("The nacos config message {} {}", consumerAppConfig.getMessage(), value);
-        return "It's Consumer Service " + consumerAppConfig.getMessage();
+        return ProducerResponse.builder().code(200)
+                .message("It's Consumer Service " + consumerAppConfig.getMessage())
+                .build();
     }
 
     @GetMapping("/load")
@@ -38,7 +41,7 @@ public class ConsumerController {
     }
 
     @GetMapping("/fail")
-    public String fail() {
+    public ProducerResponse fail() {
         return producerLoadService.fail();
     }
 }
