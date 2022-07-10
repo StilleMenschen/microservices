@@ -1,4 +1,4 @@
-package tech.tystnad.fraud;
+package tech.tystnad.producer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,14 +13,14 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("api/v1/load")
-public class LoadController {
+@RequestMapping("api/v1/producer")
+public class ProducerLoadController {
 
     @Value("${server.port}")
     public Integer port;
 
-    @GetMapping
-    public List<User> load(){
+    @GetMapping("/load")
+    public List<User> load() {
         log.info("current server port {}", port);
         return Arrays.asList(
                 new User("Jack", port),
