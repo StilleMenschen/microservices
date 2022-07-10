@@ -14,13 +14,14 @@
     <groupId>tech.tystnad</groupId>
     <artifactId>microservices</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <modules>
         <module>customer</module>
         <module>fraud</module>
         <module>eureka-server</module>
         <module>notification</module>
+        <module>consumer</module>
     </modules>
 
     <name>microservices</name>
