@@ -1,7 +1,6 @@
 package tech.tystnad.fraud;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,9 +10,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@NoArgsConstructor
 public class FraudCheckHistory {
 
     @Id

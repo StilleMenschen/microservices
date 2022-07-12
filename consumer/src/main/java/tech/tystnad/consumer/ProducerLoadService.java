@@ -1,6 +1,5 @@
 package tech.tystnad.consumer;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -23,7 +22,6 @@ public interface ProducerLoadService {
     List<User> load();
 
     @Data
-    @AllArgsConstructor
     class User {
         private String name;
         private Integer age;
