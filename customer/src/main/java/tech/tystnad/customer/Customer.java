@@ -1,8 +1,6 @@
 package tech.tystnad.customer;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,6 +8,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
 
     @Id
