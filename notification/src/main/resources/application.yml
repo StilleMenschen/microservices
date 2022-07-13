@@ -2,8 +2,8 @@ spring:
   application:
     name: notification
   rabbitmq:
-    host: gz.tystnad.tech
-    port: 45239
+    host: localhost
+    port: 5672
     virtual-host: /
   cloud:
     stream:
