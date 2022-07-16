@@ -24,6 +24,8 @@
         <module>consumer</module>
         <module>producer</module>
         <module>gateway-client</module>
+        <module>oauth2-security-server</module>
+        <module>oauth2-security-client</module>
     </modules>
 
     <name>microservices</name>
