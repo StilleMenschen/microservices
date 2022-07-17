@@ -60,6 +60,7 @@ public class OAuth2SecurityConfig {
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .redirectUri("http://127.0.0.1:8086/login/oauth2/code/api-client-oidc")
                 .redirectUri("http://127.0.0.1:8086/authorized")
                 .scope(OidcScopes.OPENID)

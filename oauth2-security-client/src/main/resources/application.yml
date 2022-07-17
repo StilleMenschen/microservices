@@ -26,6 +26,13 @@ spring:
             # 利用本机IP来指定鉴权的服务, 与客户端的 IP 区别开
             issuer-uri: http://192.168.4.103:9000
 
+feign:
+  oauth2:
+    enabled: true
+    load-balanced: true
+  circuitbreaker:
+    enabled: true
+
 server:
   port: 8086
   error:

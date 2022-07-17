@@ -26,6 +26,7 @@
         <module>gateway-client</module>
         <module>oauth2-security-server</module>
         <module>oauth2-security-client</module>
+        <module>oauth2-resource-server</module>
     </modules>
 
     <name>microservices</name>
