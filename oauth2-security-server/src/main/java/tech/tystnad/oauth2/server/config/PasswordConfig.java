@@ -1,4 +1,4 @@
-package tech.tystnad.oauth2.server.security;
+package tech.tystnad.oauth2.server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

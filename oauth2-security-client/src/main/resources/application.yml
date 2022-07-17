@@ -1,20 +1,30 @@
 spring:
   application:
-    name: oauth2-security-server
+    name: oauth2-security-client
   security:
     oauth2:
       client:
         registration:
-          messaging-client:
-            provider: spring
-            client-id: messaging-client
+          api-client-oidc:
+            provider: oauth-server
+            client-id: api-client
+            client-name: api-client-oidc
             client-secret: secret
             authorization-grant-type: authorization_code
-            redirect-uri: "http://localhost:9000/authorized"
-            scope: message.read
+            scope: openid
+            redirect-uri: "http://127.0.0.1:8086/login/oauth2/code/{registrationId}"
+          api-client-authorization-code:
+            provider: oauth-server
+            client-id: api-client
+            client-name: api-client-authorization-code
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            scope: api.read
+            redirect-uri: "http://127.0.0.1:8086/authorized"
         provider:
-          spring:
-            issuer-uri: http://localhost:9000
+          oauth-server:
+            # 利用本机IP来指定鉴权的服务, 与客户端的 IP 区别开
+            issuer-uri: http://192.168.4.103:9000
 
 server:
   port: 8086
