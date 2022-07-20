@@ -24,7 +24,10 @@ spring:
         provider:
           oauth-server:
             # 利用本机IP来指定鉴权的服务, 与客户端的 IP 区别开
-            issuer-uri: http://192.168.4.103:9000
+            issuer-uri: http://localhost:9000
+
+api:
+  base-uri: http://127.0.0.1:8087/api/books
 
 feign:
   oauth2:

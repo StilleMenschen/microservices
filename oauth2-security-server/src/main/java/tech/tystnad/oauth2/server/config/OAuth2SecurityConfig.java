@@ -77,7 +77,7 @@ public class OAuth2SecurityConfig {
         // OAuth 要求鉴权的服务和客户端服务的域不能是相同的
         // 由于是本地调试, 所以利用本机IP来指定鉴权的服务
         return ProviderSettings.builder()
-                .issuer("http://192.168.4.103:" + serverPort)
+                .issuer("http://localhost:" + serverPort)
                 .build();
     }
 

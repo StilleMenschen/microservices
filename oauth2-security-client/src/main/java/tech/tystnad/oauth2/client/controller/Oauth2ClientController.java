@@ -1,8 +1,10 @@
 package tech.tystnad.oauth2.client.controller;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -10,12 +12,17 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient;
-
 @RestController
-@RequiredArgsConstructor
 public class Oauth2ClientController {
+    private final String apiBaseUri;
     private final WebClient webClient;
+
+    @Autowired
+    public Oauth2ClientController(WebClient webClient,
+                                  @Value("${api.base-uri}") String apiBaseUri) {
+        this.webClient = webClient;
+        this.apiBaseUri = apiBaseUri;
+    }
 
     @GetMapping(value = "/api/books")
     public String[] getBooks(
@@ -23,8 +30,8 @@ public class Oauth2ClientController {
     ) {
         return this.webClient
                 .get()
-                .uri("http://127.0.0.1:8087/api/books")
-                .attributes(oauth2AuthorizedClient(authorizedClient))
+                .uri(apiBaseUri)
+                .attributes(ServerOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient(authorizedClient))
                 .retrieve()
                 .bodyToMono(String[].class)
                 .block();
