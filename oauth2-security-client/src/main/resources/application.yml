@@ -1,40 +1,41 @@
 spring:
   application:
     name: oauth2-security-client
+  thymeleaf:
+    cache: false
   security:
     oauth2:
       client:
         registration:
-          api-client-oidc:
-            provider: oauth-server
-            client-id: api-client
-            client-name: api-client-oidc
+          messaging-client-oidc:
+            provider: spring
+            client-id: messaging-client
             client-secret: secret
             authorization-grant-type: authorization_code
-            scope: openid
             redirect-uri: "http://127.0.0.1:8086/login/oauth2/code/{registrationId}"
-          api-client-authorization-code:
-            provider: oauth-server
-            client-id: api-client
-            client-name: api-client-authorization-code
+            scope: openid
+            client-name: messaging-client-oidc
+          messaging-client-authorization-code:
+            provider: spring
+            client-id: messaging-client
             client-secret: secret
             authorization-grant-type: authorization_code
-            scope: api.read
             redirect-uri: "http://127.0.0.1:8086/authorized"
+            scope: message.read,message.write
+            client-name: messaging-client-authorization-code
+          messaging-client-client-credentials:
+            provider: spring
+            client-id: messaging-client
+            client-secret: secret
+            authorization-grant-type: client_credentials
+            scope: message.read,message.write
+            client-name: messaging-client-client-credentials
         provider:
-          oauth-server:
-            # 利用本机IP来指定鉴权的服务, 与客户端的 IP 区别开
+          spring:
             issuer-uri: http://localhost:9000
 
-api:
-  base-uri: http://127.0.0.1:8087/api/books
-
-feign:
-  oauth2:
-    enabled: true
-    load-balanced: true
-  circuitbreaker:
-    enabled: true
+messages:
+  base-uri: http://127.0.0.1:8087/messages
 
 server:
   port: 8086

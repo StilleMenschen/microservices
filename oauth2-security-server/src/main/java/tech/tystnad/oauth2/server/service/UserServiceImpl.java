@@ -13,7 +13,6 @@ import tech.tystnad.oauth2.server.repository.RoleRepository;
 import tech.tystnad.oauth2.server.repository.UserRepository;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
         final Set<SimpleGrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toSet());
         return new org.springframework.security.core.userdetails.User(
-                user.getUsername(), user.getPassword(), Collections.unmodifiableSet(authorities)
+                user.getUsername(), user.getPassword(), authorities
         );
     }
 

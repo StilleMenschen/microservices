@@ -9,10 +9,10 @@ import org.springframework.security.web.SecurityFilterChain;
 public class OAuth2SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.mvcMatcher("/api/**")
+        http
+                .mvcMatcher("/messages/**")
                 .authorizeRequests()
-                .mvcMatchers("/api/**")
-                .access("hasAuthority('SCOPE_api.read')")
+                .mvcMatchers("/messages/**").access("hasAuthority('SCOPE_message.read')")
                 .and()
                 .oauth2ResourceServer()
                 .jwt();

@@ -18,12 +18,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
-import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -48,37 +47,39 @@ public class OAuth2SecurityConfig {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+        http.exceptionHandling(exceptions ->
+                exceptions.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+        );
         http.formLogin(Customizer.withDefaults());
         return http.build();
     }
 
-    @Bean
-    public RegisteredClientRepository registeredClientRepository() {
+    @Autowired
+    public void addRegisteredClient(JpaRegisteredClientRepository jpaRegisteredClientRepository) {
         RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId("api-client")
+                .clientId("messaging-client")
                 .clientSecret(passwordEncoder.encode("secret"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
-                .redirectUri("http://127.0.0.1:8086/login/oauth2/code/api-client-oidc")
+                .redirectUri("http://127.0.0.1:8086/login/oauth2/code/messaging-client-oidc")
                 .redirectUri("http://127.0.0.1:8086/authorized")
                 .scope(OidcScopes.OPENID)
-                .scope("api.read")
-                .clientSettings(
-                        ClientSettings.builder().requireAuthorizationConsent(Boolean.TRUE).build()
-                )
+                .scope("message.read")
+                .scope("message.write")
+                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(Boolean.TRUE).build())
                 .build();
-        return new InMemoryRegisteredClientRepository(registeredClient);
+
+        // Save registered client in db as if in-memory
+        jpaRegisteredClientRepository.save(registeredClient);
     }
 
     @Bean
     public ProviderSettings providerSettings() {
         // OAuth 要求鉴权的服务和客户端服务的域不能是相同的
-        // 由于是本地调试, 所以利用本机IP来指定鉴权的服务
-        return ProviderSettings.builder()
-                .issuer("http://localhost:" + serverPort)
-                .build();
+        // 由于是本地调试, 所以利用本机IP和localhost来区分鉴权的服务和获取授权的客户
+        return ProviderSettings.builder().issuer("http://localhost:" + serverPort).build();
     }
 
     @Bean
