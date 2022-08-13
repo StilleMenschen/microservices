@@ -18,7 +18,7 @@ public class ConsumerController {
     // 配类
     private final ConsumerAppConfig consumerAppConfig;
 
-    @Value("${app.value}")
+    @Value("${app.value:nothing}")
     private String value;
 
     @Autowired
